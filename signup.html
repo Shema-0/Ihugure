@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up - Rwanda Connekt</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .signup-container{
+      max-width:420px;
+      margin:4rem auto;
+      padding:2.5rem 2rem;
+      background: linear-gradient(135deg, #1e293b 60%, #256d4f 100%);
+      border-radius: 18px;
+      box-shadow: 0 6px 32px 0 rgba(44, 62, 80, 0.18);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .signup-container h2{color:#fff;margin-bottom:0.5rem}
+    .signup-container p{color:#ccc;margin-bottom:1.5rem}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;color:#ddd;margin-bottom:0.4rem}
+    .form-group input{width:100%;padding:0.8rem;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:#111;color:#fff}
+    .form-actions{display:flex;gap:1rem;justify-content:flex-end;margin-top:1rem}
+    .btn, .cancel-btn {
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn:hover, .cancel-btn:hover {
+      background: #256d4f;
+      color: #fff;
+      border-color: #256d4f;
+    }
+    .error{color:#ffb4b4;margin-top:0.5rem}
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+            <a href="index.html" class="brand-image" aria-label="Rwanda Connekt home">
+                <img src="images/logo__2.png" alt="Rwanda Connekt Logo" class="brand-image">
+            </a>
+        </div>
+    <ul class="nav-links"><li class="link"><a href="index.html">Home</a></li></ul>
+    <a href="index.html" class="btn">Back Home</a>
+  </nav>
+
+  <main class="container">
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+      <p>Create an account to access all features.</p>
+      <div class="form-group">
+        <label for="signup-email">Email or Phone</label>
+        <input id="signup-email" type="text" placeholder="you@example.com or 2507xxxxxxx">
+      </div>
+      <div class="form-group">
+        <label for="signup-password">Password</label>
+        <input id="signup-password" type="password" placeholder="Enter a password (min 4 chars)">
+      </div>
+      <div class="error" id="signup-error"></div>
+      <div class="form-actions">
+        <button type="button" class="cancel-btn" onclick="window.location.href='login.html'">Cancel</button>
+        <button class="btn" id="signupBtn">Sign Up</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Redirect to login.html if not logged in
+    if (!localStorage.getItem('rc_user')) {
+      window.location.href = 'login.html';
+    }
+    const signupBtn = document.getElementById('signupBtn');
+    const errorEl = document.getElementById('signup-error');
+    signupBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      errorEl.textContent = '';
+      if(!email || password.length < 4){ errorEl.textContent = 'Please enter a valid email/phone and password (min 4 chars).'; return; }
+      // store a simple signed-up flag
+      localStorage.setItem('rc_user', JSON.stringify({id:Date.now(), identifier: email}));
+      window.location.href = 'plans.html';
+    });
+  </script>
+  <div class="copyright">
+    Copyright © 2025 SHEMA Ian. All Rights Reserved.
+  </div>
+</body>
+</html>

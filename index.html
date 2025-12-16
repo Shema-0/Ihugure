@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Rwanda Connekt</title>
+</head>
+
+<body>
+        <script>
+      
+            if (!localStorage.getItem('rc_user')) {
+                window.location.href = 'login.html';
+            }
+        </script>
+        <nav>
+        <div class="nav-logo">
+            <a href="index.html" class="brand-image" aria-label="Rwanda Connekt home">
+                <img src="images/logo__2.png" alt="Rwanda Connekt Logo" class="brand-image">
+                
+            </a>
+        </div>
+
+        <ul class="nav-links">
+            <li class="link"><a href="#">Home</a></li>
+            <li id="link1" class="link"><a href="#">Features</a></li>
+            <li id="link2" class="link"><a href="#">Pricing</a></li>
+            <li id="link3" class="link"><a href="#">About</a></li>
+        </ul>
+        <a href="login.html" class="btn">Sign In</a>
+    </nav>
+
+    <header class="container">
+        <div class="content">
+            <span class="blur"></span>
+            <span class="blur"></span>
+            <h4> </h4>
+            <H1>HELLO Translate <span> And </span>Learn Languages Easily</H1>
+            <p>Welcome to Rwanda Connekt, your ultimate destination for mastering languages with ease and
+                efficiency. Our platform is designed to help you translate and learn new languages effortlessly, making
+                language.
+            </p>
+            <a href="#features" class="btn">Get Started</a>
+        </div>
+        <div class="image">
+            
+        </div>
+    </header>
+
+    <section class="container" id="features">
+        <h2 class="header">OUR FEATURES</h2>
+        <div class="features">
+            <div class="card">
+                <span><i class="ri-play-circle-line"></i></span>
+                <h4>Free Tutorials</h4>
+                <p>
+                    We provide free tutorials to learn languages easily and quickly.
+                </p>
+                <a href="tutorials.html">Join Now <i class="ri-arrow-right-line"></i></a>
+            </div>
+            <div class="card">
+                <span><i class="ri-global-line"></i></span>
+                <h4>Translate</h4>
+                <p>
+                    You can translate any text from any language to another language easily.
+                </p>
+                <a href="translate.html">Translate <i class="ri-arrow-right-line"></i></a>
+            </div>
+            <div class="card">
+                <span><i class="ri-lightbulb-flash-line"></i></span>
+                <h4>Quiz</h4>
+                <p>
+                    Play fun games and quizzes to test your English and French knowledge!
+                </p>
+                <a href="#" onclick="accessQuiz(event)">Play <i class="ri-arrow-right-line"></i></a>
+            </div>
+            <div class="card">
+                <span><i class="ri-shake-hands-line"></i></span>
+                <h4>Online Courses</h4>
+                <p>
+                    Join our online courses to learn languages from experts and professionals.
+                </p>
+                <a href="#" onclick="accessOnlineCourses(event)">Schedule <i class="ri-arrow-right-line"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="header"> PRICING PLANS</h2>
+        <p class="sub-header">
+            Choose a plan that suits you and start learning languages today!
+        </p>
+        <div class="pricing">
+            <div class="card">
+                <div class="content">
+                    <h4>Basic Plan</h4>
+                    <h3>0$</h3>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                       Free 10 min course
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                       Free Translator
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn" onclick="goToBasicFeature('tutorials')" style="flex: 1;">Tutorials</button>
+                    <button class="btn" onclick="goToBasicFeature('translate')" style="flex: 1;">Translate</button>
+                    
+                </div>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <h4>Gold Plan</h4>
+                    <h3>5$</h3>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                    30 min course
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                    Interactive Quiz Games
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                        Priority Support
+                    </p>
+                </div>
+                <button class="btn" onclick="handlePlanClick('gold')">Join Now</button>
+            </div>
+            <div class="card">
+                <div class="content">
+                    <h4>Diamond Plan</h4>
+                    <h3>10$</h3>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                        
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                    
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                        Personal Coaching
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+    
+                    </p>
+                    <p>
+                        <i class="ri-checkbox-circle-line"></i>
+                    
+                    </p>
+                </div>
+               <button class="btn" onclick="handlePlanClick('gold')">Join Now</button>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <span class="blur"></span>
+        <span class="blur"></span>
+        <div class="column">
+            
+            <p>
+                
+            </p>
+            <div class="socials">
+                <a href="#"><i class="ri-youtube-line"></i></a>
+                <a href="#"><i class="ri-instagram-line"></i></a>
+                <a href="#"><i class="ri-twitter-line"></i></a>
+            </div>
+        </div>
+       
+        <div class="column">
+            <h4>About Us</h4>
+            <a href="#">Blogs</a>
+           
+        </div>
+        <div class="column">
+            <h4>Contact</h4>
+            <a href="#">Contact Us</a>
+            <a href="#">Privicy Policy</a>
+            <a href="#">Terms & Conditions</a>
+        </div>
+    </footer>
+
+    <div class="copyright">
+        Copyright © 2025 SHEMA Ian. All Rights Reserved.
+    </div>
+
+
+    <script src="script.js"></script>
+    <script>
+      function handlePlanClick(plan) {
+        window.location.href = 'plans.html';
+      }
+
+      function accessQuiz(event) {
+        event.preventDefault();
+        const userPlan = localStorage.getItem('rc_plan');
+        
+        if  (!userPlan || userPlan !== 'Gold' ) {
+          alert('Quiz Games require a Gold . Please upgrade to access this feature.');
+          window.location.href = 'plans.html';
+        } else {
+          window.location.href = 'quiz.html';
+        }
+      }
+
+      function goToBasicFeature(feature) {
+        if (feature === 'tutorials') {
+          window.location.href = 'tutorials.html';
+        } else if (feature === 'translate') {
+          window.location.href = 'translate.html';
+        }
+      }
+
+            function accessOnlineCourses(event) {
+                event.preventDefault();
+                const userPlan = localStorage.getItem('rc_plan');
+        
+                if (!userPlan || userPlan !== 'diamond') {
+                    alert('Online Courses with Personal Coaches require the Diamond plan. Please upgrade to access this feature.');
+                    window.location.href = 'plans.html';
+                } else {
+                    window.location.href = 'schedule.html';
+                }
+            }
+    </script>
+</body>
+
+</html>

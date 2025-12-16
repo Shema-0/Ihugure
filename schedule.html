@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schedule a Class - Rwanda Connekt</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .schedule-container{
+      max-width:900px;
+      margin:3rem auto;
+      padding:2.5rem 2rem;
+      background: linear-gradient(135deg, #1e293b 60%, #256d4f 100%);
+      border-radius: 18px;
+      box-shadow: 0 6px 32px 0 rgba(44, 62, 80, 0.18);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .schedule-container h1{color:#fff;margin-bottom:0.5rem}
+    .form-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+    label{display:block;color:#ccc;margin-bottom:0.25rem}
+    input, select, textarea{width:100%;padding:0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:#111;color:#fff}
+    .small{flex:1 1 180px}
+    .full{flex:1 1 100%}
+    .actions{display:flex;gap:1rem;justify-content:flex-end;margin-top:1rem}
+    .note{color:#aaa;margin-top:0.5rem}
+    .success{color:#22c55e;margin-top:0.5rem}
+    .link-btn{display:inline-block;padding:0.6rem 0.9rem;border-radius:8px;background:linear-gradient(135deg,#009B3A,#FFCD00);color:#000;text-decoration:none}
+  </style>
+</head>
+<body>
+  <nav>
+     <div class="nav-logo">
+            <a href="index.html" class="brand-image" aria-label="Rwanda Connekt home">
+                <img src="images/logo__2.png" alt="Rwanda Connekt Logo" class="brand-image">
+                
+            </a>
+        </div>
+    <a href="index.html" class="btn">Back Home</a>
+  </nav>
+
+  <main class="container schedule-container">
+    <h1>Schedule an Online Classroom</h1>
+      <div id="accessDenied" style="display: none; text-align: center; padding: 3rem;">
+        <h2 style="color: #fff; margin-bottom: 1rem;"> Premium Feature</h2>
+        <p style="color: #ccc; margin-bottom: 1.5rem;">Online Courses with Personal Coaches are available with the <strong>Diamond Plan</strong> only.</p>
+        <p style="color: #999; margin-bottom: 2rem;">Please upgrade your plan to access personal coaching sessions.</p>
+        <a href="index.html" class="link-btn">Choose a Plan</a>
+      </div>
+      <div id="scheduleContent">
+    <p class="note">Pick a date/time and coach. After submitting, you'll get a pre-filled Google Calendar event you can save. For Google Classroom, open the Classroom dashboard link below to create or join a class and share the class code with your coach.</p>
+
+    <div>
+      <label for="coach">Choose a Coach</label>
+      <select id="coach">
+          <option value="ATETE KETHIA|atete.kethia@example.com">ATETE KETHIA — atetekethia123@gmail.com</option>
+          <option value="SHEMA Ian|shema.ian@example.com">SHEMA Ian — shema.ian@gmail.com</option>
+          <option value="Imbwa OG|imbwa.og@example.com">IMAZ ZABID — imazzab22@gmail.com</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="small">
+        <label for="date">Date</label>
+        <input id="date" type="date">
+      </div>
+      <div class="small">
+        <label for="time">Start Time</label>
+        <input id="time" type="time">
+      </div>
+      <div class="small">
+        <label for="duration">Duration (minutes)</label>
+        <input id="duration" type="number" value="60" min="15" step="15">
+      </div>
+    </div>
+
+    <div>
+      <label for="topic">Topic / Notes</label>
+      <textarea id="topic" rows="4" placeholder="What would you like to cover in this session?"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="scheduleBtn">Schedule & Create Calendar Event</button>
+      <a class="link-btn" id="classroomLink" href="https://classroom.google.com/" target="_blank">Open Google Classroom</a>
+    </div>
+
+    <div id="result" class="success" role="status" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <script>
+    // Redirect to login.html if not logged in
+    if (!localStorage.getItem('rc_user')) {
+      window.location.href = 'login.html';
+    }
+
+    // Check if user has Diamond plan
+    const userPlan = localStorage.getItem('rc_plan');
+    const hasAccess = userPlan === 'diamond';
+    
+    if (!hasAccess) {
+      document.getElementById('accessDenied').style.display = 'block';
+      document.getElementById('scheduleContent').style.display = 'none';
+    }
+
+    // Helper: build Google Calendar create-event URL
+    function buildGCalUrl(title, details, startISO, endISO) {
+      // dates must be in format YYYYMMDDTHHMMSSZ or YYYYMMDDTHHMMSS (local)
+      // We'll use full ISO without timezone suffix (browser will handle) in local form
+      const toGCal = (iso) => iso.replace(/[-:]/g, '').split('.')[0];
+      const dates = toGCal(startISO) + '/' + toGCal(endISO);
+      const url = new URL('https://calendar.google.com/calendar/render');
+      url.searchParams.set('action','TEMPLATE');
+      url.searchParams.set('text', title);
+      url.searchParams.set('details', details);
+      url.searchParams.set('dates', dates);
+      url.searchParams.set('sf', 'true');
+      url.searchParams.set('output', 'xml');
+      return url.toString();
+    }
+
+    function isoFromDateTime(date, time) {
+      // date YYYY-MM-DD, time HH:MM
+      if(!date || !time) return null;
+      const [y,m,d] = date.split('-');
+      const [hh,mm] = time.split(':');
+      const dt = new Date(y, parseInt(m)-1, d, hh, mm, 0);
+      return dt.toISOString();
+    }
+
+    document.getElementById('scheduleBtn').addEventListener('click', ()=>{
+      const coachValue = document.getElementById('coach').value;
+      const [coachName, coachEmail] = coachValue.split('|');
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+      const duration = parseInt(document.getElementById('duration').value) || 60;
+      const topic = document.getElementById('topic').value.trim() || 'Language coaching session';
+
+      if(!date || !time){
+        document.getElementById('result').textContent = 'Please choose date and start time.';
+        return;
+      }
+
+      const startISO = isoFromDateTime(date, time);
+      const start = new Date(startISO);
+      const end = new Date(start.getTime() + duration*60000);
+      const endISO = end.toISOString();
+
+      const title = `Rwanda Connekt - ${coachName} coaching`;
+      const details = `Topic: ${topic}\nCoach: ${coachName} <${coachEmail}>\nScheduled via Rwanda Connekt`;
+
+      // Save locally as a scheduled event (demo)
+      const event = {id: Date.now(), coachName, coachEmail, date, time, duration, topic};
+      const events = JSON.parse(localStorage.getItem('rc_events') || '[]');
+      events.push(event);
+      localStorage.setItem('rc_events', JSON.stringify(events));
+
+      // Build Google Calendar URL and open in new tab
+      const gcal = buildGCalUrl(title, details, startISO, endISO);
+      window.open(gcal, '_blank');
+
+      // Provide user-facing confirmation and next steps for Google Classroom
+      document.getElementById('result').innerHTML = `Scheduled with ${coachName}. A Google Calendar event window has been opened — save it and invite <strong>${coachEmail}</strong>.\nTo add this session to a Google Classroom, open Google Classroom and create or share the class code with your coach.`;
+    });
+  </script>
+
+  <div class="copyright">
+    Copyright © 2025 SHEMA Ian. All Rights Reserved.
+  </div>
+</body>
+</html>

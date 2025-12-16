@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quiz Games - Rwanda Connekt</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+             .quiz-main-container {
+                 max-width: 1200px;
+                 margin: 3rem auto;
+                 padding: 2.5rem 2rem;
+                 background: linear-gradient(135deg, #1e293b 60%, #256d4f 100%);
+                 border-radius: 18px;
+                 box-shadow: 0 6px 32px 0 rgba(44, 62, 80, 0.18);
+             }
+        *{
+            padding: 0;
+            margin: 0;
+            outline: none;
+            border: none;
+            box-sizing: border-box;
+        }
+
+        img{
+            width: 100%;
+            display: flex;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        body{
+            font-family: 'Poppins', sans-serif;
+            background-color: #071227; 
+            background-image: 
+              linear-gradient(160deg, rgba(3,40,44,0.92) 0%, rgba(3,70,46,0.92) 50%, rgba(6,32,66,0.92) 100%),
+              radial-gradient(800px 400px at 10% 10%, rgba(255,205,0,0.06), transparent 20%),
+              radial-gradient(600px 300px at 90% 80%, rgba(0,155,58,0.04), transparent 20%);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            color: #fff;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        
+        body::before{
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'><filter id='n'><feTurbulence baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.03' fill='%23000000'/></svg>");
+            opacity: 0.6;
+            mix-blend-mode: overlay;
+            z-index: 0;
+        }
+
+        nav{
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            position: relative;
+            z-index: 2; 
+        }
+
+        .nav-logo{
+            max-width: 220px;
+        }
+
+        .container{
+            max-width: 1200px;
+            margin: auto;
+            padding: 5rem 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .btn{
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            color: #ffffff;
+            background-color: #2b2b2b; 
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .btn:hover{
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+            background-color:  #4f9961;
+        }
+        
+       
+        .quiz-container { 
+            max-width: 1000px; 
+            margin: 3rem auto; 
+            padding: 2rem; 
+        }
+        .quiz-header { 
+            text-align: center; 
+            margin-bottom: 2rem; 
+        }
+        .quiz-header h1 { 
+            color: #fff; 
+            font-size: 2.5rem; 
+            margin-bottom: 0.5rem; 
+        }
+        .quiz-header p { 
+            color: #ccc; 
+        }
+        
+        .games-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 2rem; 
+            margin-bottom: 3rem; 
+        }
+        .game-card { 
+            background: rgba(39, 39, 42, 0.9); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            border: 2px solid rgba(255, 255, 255, 0.06); 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        .game-card:hover { 
+            border-color: #FFCD00; 
+            transform: translateY(-5px); 
+        }
+        .game-card h3 { 
+            color: #fff; 
+            margin-bottom: 0.5rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+        .game-card p { 
+            color: #ccc; 
+            margin-bottom: 1rem; 
+        }
+        .game-card button { 
+            background: linear-gradient(135deg, #009B3A, #FFCD00); 
+            color: #000; 
+            border: none; 
+            padding: 0.7rem 1.5rem; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600; 
+        }
+        
+        .quiz-content { 
+            display: none; 
+            background: rgba(39, 39, 42, 0.9); 
+            padding: 2rem; 
+            border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+        }
+        .quiz-content.active { 
+            display: block; 
+        }
+        
+        .question-box { 
+            background: #18181B; 
+            padding: 1.5rem; 
+            border-radius: 8px; 
+            margin-bottom: 1.5rem; 
+            border-left: 4px solid #FFCD00; 
+        }
+        .question-box h4 { 
+            color: #fff; 
+            margin-bottom: 1rem; 
+        }
+        
+        .options { 
+            display: grid; 
+            gap: 0.75rem; 
+            margin-bottom: 1rem; 
+        }
+        .option { 
+            background: rgba(255, 255, 255, 0.05); 
+            padding: 0.8rem; 
+            border-radius: 6px; 
+            color: #ccc; 
+            cursor: pointer; 
+            border: 2px solid transparent; 
+            transition: all 0.2s; 
+        }
+        .option:hover { 
+            border-color: #FFCD00; 
+            color: #fff; 
+        }
+        .option.selected { 
+            background: rgba(0, 155, 58, 0.3); 
+            border-color: #009B3A; 
+            color: #fff; 
+        }
+        .option.correct { 
+            background: rgba(34, 197, 94, 0.2); 
+            border-color: #22c55e; 
+            color: #22c55e; 
+        }
+        .option.incorrect { 
+            background: rgba(239, 68, 68, 0.2); 
+            border-color: #ef4444; 
+            color: #ef4444; 
+        }
+        
+        .score-box { 
+            text-align: center; 
+            padding: 2rem; 
+            background: rgba(0, 155, 58, 0.1); 
+            border-radius: 12px; 
+            margin: 1rem 0; 
+        }
+        .score-box h3 { 
+            color: #FFCD00; 
+            font-size: 2rem; 
+            margin-bottom: 0.5rem; 
+        }
+        .score-box p { 
+            color: #ccc; 
+        }
+        
+        .buttons { 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+            margin-top: 1rem; 
+        }
+        .btn-secondary { 
+            background: rgba(255, 255, 255, 0.1); 
+            color: #fff; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            padding: 0.7rem 1.5rem; 
+            border-radius: 8px; 
+            cursor: pointer; 
+        }
+        .btn-secondary:hover { 
+            background: rgba(255, 255, 255, 0.15); 
+        }
+        
+        .back-btn { 
+            display: inline-block; 
+            color: #FFCD00; 
+            text-decoration: none; 
+            margin-bottom: 1rem; 
+        }
+        
+        .copyright{
+            max-width: 1200px;
+            margin: auto;
+            padding: 1rem;
+            color: #fff;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .games-grid { 
+                grid-template-columns: 1fr; 
+            }
+            .quiz-header h1 { 
+                font-size: 1.8rem; 
+            }
+        }
+
+        .creative-glass {
+          background: rgba(39, 39, 42, 0.7);
+          border-radius: 24px;
+          box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.22);
+          backdrop-filter: blur(8px);
+          border: 1.5px solid rgba(255,255,255,0.12);
+          position: relative;
+          overflow: hidden;
+        }
+        .creative-title {
+          font-size: 2.2rem;
+          color: #FFCD00;
+          font-weight: 700;
+          letter-spacing: 1px;
+          margin-bottom: 0.5rem;
+          text-shadow: 0 2px 12px #256d4f44;
+        }
+        .creative-canvas {
+          background: linear-gradient(120deg, #222 60%, #256d4f 100%);
+          border-radius: 16px;
+          margin-bottom: 1rem;
+          box-shadow: 0 4px 24px #0003;
+        }
+        .creative-desc {
+          color: #ccc;
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
+        }
+        .creative-btn {
+          background: linear-gradient(135deg, #009B3A, #FFCD00);
+          color: #222;
+          font-weight: 700;
+          border: none;
+          box-shadow: 0 2px 8px #009b3a22;
+        }
+        .creative-btn:hover {
+          background: linear-gradient(135deg, #FFCD00, #009B3A);
+          color: #fff;
+          box-shadow: 0 6px 18px #009b3a44;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+          <div class="nav-logo">
+            <a href="index.html" class="brand-image" aria-label="Rwanda Connekt home">
+                <img src="images/logo__2.png" alt="Rwanda Connekt Logo" class="brand-image">
+                
+            </a>
+        </div>
+    </nav>
+
+    <main class="container quiz-container">
+        <a href="index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
+
+        <div id="accessDenied" style="display: none; text-align: center; padding: 3rem;">
+            <h2 style="color: #fff; margin-bottom: 1rem;"> Premium Feature</h2>
+            <p style="color: #ccc; margin-bottom: 1.5rem;">Quiz Games are available with the <strong>Gold Plan</strong> or higher.</p>
+            <p style="color: #999; margin-bottom: 2rem;">Please upgrade your plan to access interactive quizzes.</p>
+            <a href="index.html" class="btn">Choose a Plan</a>
+        </div>
+
+        <div class="quiz-header">
+            <h1>Quiz Games & Fun Learning</h1>
+            <p>Play games and quizzes to test your English and French knowledge</p>
+        </div>
+
+        
+        <div id="gameSelection" class="games-grid">
+            <div class="game-card">
+                <h3><i class="ri-english-input"></i> English Quiz</h3>
+                <p>Test your English vocabulary, grammar, and more!</p>
+                <button onclick="startQuiz('english')">Play Quiz</button>
+            </div>
+            <div class="game-card">
+                <h3><i class="ri-france"></i> French Quiz</h3>
+                <p>Challenge yourself with fun French language questions!</p>
+                <button onclick="startQuiz('french')">Play Quiz</button>
+            </div>
+            <div class="game-card">
+                <h3><i class="ri-lightbulb-flash-line"></i> Word Match Game</h3>
+                <p>Match English words with their French translations!</p>
+                <button onclick="startQuiz('wordmatch')">Play Game</button>
+            </div>
+            <div class="game-card">
+                <h3><i class="ri-function-line"></i> Fill the Blanks</h3>
+                <p>Complete sentences with missing words in English or French!</p>
+                <button onclick="startQuiz('fillblanks')">Play Game</button>
+            </div>
+            <div class="game-card">
+                <h3><i class="ri-Kinyarwanda-input"></i> Kinyarwanda Quiz</h3>
+                <p>Isuzume ubumenyi mu Kinyarwanda</p>
+                <button onclick="startQuiz('Kinyarwanda')">Play Quiz</button>
+            </div>
+        </div>
+
+        <div id="quizContent" class="quiz-content"></div>
+
+       
+        <div class="visual-game-container creative-glass" style="margin-top:2rem; text-align:center;">
+          <h2 class="creative-title">🌟 Language Jumper Game</h2>
+          <canvas id="languageJumper" width="600" height="180" class="creative-canvas"></canvas>
+          <p class="creative-desc">Jump over obstacles by pressing <strong>Space</strong>! Obstacles are words in Kinyarwanda, English, or French. Learn as you play!</p>
+          <button class="btn creative-btn" id="startJumperBtn" onclick="startLanguageJumper()">Play Game</button>
+          <button class="btn creative-btn" id="restartJumperBtn" style="display:none;" onclick="restartLanguageJumper()">Restart Game</button>
+        </div>
+        <script>
+        let jumperGame = null;
+        let restartBtn = null;
+        function startLanguageJumper() {
+          if (jumperGame) return;
+          const canvas = document.getElementById('languageJumper');
+          const ctx = canvas.getContext('2d');
+          const words = [
+            {text:'Bonjour', lang:'French'},
+            {text:'Hello', lang:'English'},
+            {text:'Muraho', lang:'Kinyarwanda'},
+            {text:'Merci', lang:'French'},
+            {text:'Amakuru', lang:'Kinyarwanda'},
+            {text:'Thanks', lang:'English'},
+            {text:'Yego', lang:'Kinyarwanda'},
+            {text:'No', lang:'English'},
+            {text:'Non', lang:'French'}
+          ];
+          let player = {x:50, y:150, vy:0, jumping:false};
+          let obstacles = [];
+          let score = 0;
+          let gameOver = false;
+          let obstacleInterval = null;
+          restartBtn = document.getElementById('restartJumperBtn');
+          restartBtn.style.display = 'none';
+          function spawnObstacle() {
+            const word = words[Math.floor(Math.random()*words.length)];
+            obstacles.push({x:600, y:150, word:word.text, lang:word.lang});
+          }
+          function draw() {
+            ctx.clearRect(0,0,600,180);
+            ctx.fillStyle = '#256d4f';
+            ctx.fillRect(0,160,600,20);
+            ctx.fillStyle = '#FFCD00';
+            ctx.fillRect(player.x, player.y, 30, 30);
+            // player (stick man)
+            ctx.save();
+            ctx.translate(player.x+15, player.y+30); // base position
+            ctx.strokeStyle = '#FFCD00';
+            ctx.lineWidth = 3;
+            // head
+            ctx.beginPath();
+            ctx.arc(0, -20, 8, 0, Math.PI*2);
+            ctx.stroke();
+            // body
+            ctx.beginPath();
+            ctx.moveTo(0, -12);
+            ctx.lineTo(0, 8);
+            ctx.stroke();
+            // left leg
+            ctx.beginPath();
+            ctx.moveTo(0, 8);
+            ctx.lineTo(-10, 18);
+            ctx.stroke();
+            // right leg
+            ctx.beginPath();
+            ctx.moveTo(0, 8);
+            ctx.lineTo(10, 18);
+            ctx.stroke();
+            // left arm
+            ctx.beginPath();
+            ctx.moveTo(0, -8);
+            ctx.lineTo(-10, 0);
+            ctx.stroke();
+            // right arm
+            ctx.beginPath();
+            ctx.moveTo(0, -8);
+            ctx.lineTo(10, 0);
+            ctx.stroke();
+            ctx.restore();
+            obstacles.forEach(o => {
+              ctx.fillStyle = o.lang==='French' ? '#009B3A' : o.lang==='English' ? '#1e293b' : '#eab308';
+              ctx.fillRect(o.x, o.y, 30, 30);
+              ctx.fillStyle = '#fff';
+              ctx.font = 'bold 14px Poppins';
+              ctx.fillText(o.word, o.x-2, o.y-8);
+            });
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 18px Poppins';
+            ctx.fillText('Score: '+score, 10, 30);
+            if(gameOver){
+              ctx.fillStyle = '#ff4d4d';
+              ctx.font = 'bold 32px Poppins';
+              ctx.fillText('Game Over!', 220, 90);
+              restartBtn.style.display = 'inline-block';
+            }
+          }
+          function update() {
+            if(gameOver) return;
+            player.y += player.vy;
+            if(player.y < 90){ player.vy += 2; }
+            if(player.y >= 150){ player.y = 150; player.vy = 0; player.jumping = false; }
+            obstacles.forEach(o => { o.x -= 6; });
+            if(obstacles.length && obstacles[0].x < -30) obstacles.shift();
+            obstacles.forEach(o => {
+              if(o.x < player.x+30 && o.x+30 > player.x && player.y+30 > o.y){
+                if(player.y+30 > o.y && player.y < o.y+30){
+                  gameOver = true;
+                  clearInterval(obstacleInterval);
+                }
+              }
+            });
+            if(!gameOver && obstacles.length && obstacles[0].x < player.x && !player.jumping){
+              score++;
+            }
+          }
+          function loop(){
+            update();
+            draw();
+            if(!gameOver) requestAnimationFrame(loop);
+          }
+          document.addEventListener('keydown', function(e){
+            if(e.code==='Space' && !player.jumping && !gameOver){
+              player.vy = -18;
+              player.jumping = true;
+            }
+          });
+          obstacleInterval = setInterval(spawnObstacle, 1800);
+          loop();
+          jumperGame = true;
+        }
+        function restartLanguageJumper() {
+          jumperGame = null;
+          document.getElementById('languageJumper').getContext('2d').clearRect(0,0,600,180);
+          document.getElementById('restartJumperBtn').style.display = 'none';
+          startLanguageJumper();
+        }
+        </script>
+    </main>
+    
+    <div class="copyright">
+        Copyright © 2025 SHEMA Ian. All Rights Reserved.
+    </div>
+
+    <script>
+        // Check if user has Gold or Diamond plan
+        const userPlan = localStorage.getItem('rc_plan');
+        const hasAccess = userPlan === 'gold' || userPlan === 'diamond';
+        
+        if (!hasAccess) {
+            document.getElementById('accessDenied').style.display = 'block';
+            document.getElementById('gameSelection').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'none';
+        } else {
+            // If access is granted, ensure the game selection grid is visible initially.
+            document.getElementById('gameSelection').style.display = 'grid';
+        }
+
+        const quizzes = {
+            english: [
+                {
+                    question: "What is the opposite of 'hot'?",
+                    options: ["Cold", "Warm", "Cool", "Frozen"],
+                    correct: 0
+                },
+                {
+                    question: "Which word means 'a large body of water surrounded by land'?",
+                    options: ["River", "Lake", "Ocean", "Sea"],
+                    correct: 1
+                },
+                {
+                    question: "What is the past tense of 'go'?",
+                    options: ["Gone", "Went", "Going", "Goes"],
+                    correct: 1
+                },
+                {
+                    question: "Which word is a noun?",
+                    options: ["Beautiful", "Quickly", "Table", "Run"],
+                    correct: 2
+                },
+                {
+                    question: "What does 'enthusiastic' mean?",
+                    options: ["Sad", "Very eager or interested", "Tired", "Angry"],
+                    correct: 1
+                }
+            ],
+            french: [
+                {
+                    question: "What is 'hello' in French?",
+                    options: ["Adieu", "Bonjour", "Merci", "S'il vous plaît"],
+                    correct: 1
+                },
+                {
+                    question: "What does 'merci' mean?",
+                    options: ["Goodbye", "Please", "Thank you", "Yes"],
+                    correct: 2
+                },
+                {
+                    question: "Which word means 'cat' in French?",
+                    options: ["Chien", "Chat", "Maison", "Arbre"],
+                    correct: 1
+                },
+                {
+                    question: "What is 'water' in French?",
+                    options: ["Vin", "Eau", "Lait", "Café"],
+                    correct: 1
+                },
+                {
+                    question: "How do you say 'I love you' in French?",
+                    options: ["Je t'aime", "Tu m'aimes", "Je suis", "C'est bon"],
+                    correct: 0
+                }
+            ],
+            Kinyarwanda: [
+                {
+                    question: "Iri ni ijambo ry'ikinyarwanda rivuga iki: 'Muraho'?",
+                    options: ["Hello", "Goodbye", "Thank you", "Please"],
+                    correct: 0
+                },
+                {
+                    question: "Iri ni ijambo ry'ikinyarwanda rivuga iki: 'Amakuru'?",
+                    options: ["News", "How are you?", "Goodbye", "Thank you"],
+                    correct: 1
+                },
+                {
+                    question: "Iri ni ijambo ry'ikinyarwanda rivuga iki: 'Inka'?",
+                    options: ["Goat", "Cow", "Sheep", "Chicken"],
+                    correct: 1
+                },
+                {
+                    question: "Iri ni ijambo ry'ikinyarwanda rivuga iki: 'Amazi'?",
+                    options: ["Juice", "Water", "Milk", "Tea"],
+                    correct: 1
+                },
+                {
+                    question: "Iri ni ijambo ry'ikinyarwanda rivuga iki: 'Urukundo'?",
+                    options: ["Friendship", "Love", "Family", "Happiness"],
+                    correct: 1
+                }
+            ], 
+            wordmatch: [
+                { en: "Hello", fr: "Bonjour", options: ["Bonjour", "Au revoir", "Merci"] },
+                { en: "Thank you", fr: "Merci", options: ["Merci", "S'il vous plaît", "De rien"] },
+                { en: "Cat", fr: "Chat", options: ["Chat", "Chien", "Oiseau"] },
+                { en: "Love", fr: "Amour", options: ["Amour", "Ami", "Famille"] },
+                { en: "Water", fr: "Eau", options: ["Eau", "Vin", "Café"] }
+            ],
+            fillblanks: [
+                { sentence: "The capital of France is ___.", options: ["Paris", "Lyon", "Nice"], correct: 0, lang: "en" },
+                { sentence: "Je m'appelle ___ (My name is ___)", options: ["Pierre", "Marie", "Jean"], correct: 0, lang: "fr" },
+                { sentence: "The sun rises in the ___.", options: ["East", "West", "North"], correct: 0, lang: "en" },
+                { sentence: "___ est la couleur du ciel (The sky is ___)", options: ["Bleu", "Rouge", "Vert"], correct: 0, lang: "fr" },
+                { sentence: "Coffee is made from ___.", options: ["Beans", "Leaves", "Flowers"], correct: 0, lang: "en" }
+            ]
+        };
+
+        let currentQuiz = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function startQuiz(type) {
+            currentQuiz = type;
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('gameSelection').style.display = 'none';
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const quizContent = document.getElementById('quizContent');
+            quizContent.classList.add('active');
+            const quiz = quizzes[currentQuiz];
+            
+            if (currentQuestion >= quiz.length) {
+                showResults();
+                return;
+            }
+
+            const item = quiz[currentQuestion];
+            let html = `<div class="question-box">`;
+
+            if (currentQuiz === 'wordmatch') {
+                html += `<h4>Match the words: "${item.en}" = ?</h4>`;
+                html += `<div class="options">`;
+                // Logic to find the correct index for wordmatch options dynamically
+                const correctFrIndex = item.options.indexOf(item.fr);
+                item.options.forEach((opt, i) => {
+                    html += `<div class="option" onclick="selectWordMatch(${i}, ${i === correctFrIndex ? true : false})">${opt}</div>`;
+                });
+            } else if (currentQuiz === 'fillblanks') {
+                // Assuming fillblanks questions are similar to multiple-choice where item.correct is the index
+                const questionText = item.sentence.replace('___', '<span>_______</span>'); // Simple visual aid
+                html += `<h4>${questionText}</h4>`;
+                html += `<div class="options">`;
+                item.options.forEach((opt, i) => {
+                    html += `<div class="option" onclick="selectOption(${i}, ${item.correct})">${opt}</div>`;
+                });
+            } else {
+                // Standard Multiple Choice Quizzes (English, French, Kinyarwanda)
+                html += `<h4>${item.question}</h4>`;
+                html += `<div class="options">`;
+                item.options.forEach((opt, i) => {
+                    html += `<div class="option" onclick="selectOption(${i}, ${item.correct})">${opt}</div>`;
+                });
+            }
+
+            html += `</div></div>`;
+            html += `<p style="color:#ccc; text-align:center">Question ${currentQuestion + 1} of ${quiz.length}</p>`;
+            quizContent.innerHTML = html;
+        }
+
+        function selectOption(selected, correct) {
+            if (answered) return;
+            answered = true;
+            const options = document.querySelectorAll('.option');
+            options[selected].classList.add(selected === correct ? 'correct' : 'incorrect');
+            options[correct].classList.add('correct');
+            if (selected === correct) score++;
+            setTimeout(nextQuestion, 1500);
+        }
+
+        function selectWordMatch(selected, isCorrect) {
+            if (answered) return;
+            answered = true;
+            const options = document.querySelectorAll('.option');
+            options[selected].classList.add(isCorrect ? 'correct' : 'incorrect');
+          
+            if (isCorrect) score++;
+            setTimeout(nextQuestion, 1500);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            displayQuestion();
+        }
+
+        function showResults() {
+            const quiz = quizzes[currentQuiz];
+            const percentage = Math.round((score / quiz.length) * 100);
+            const quizContent = document.getElementById('quizContent');
+            let html = `
+                <div class="score-box">
+                    <h3>🎉 Quiz Complete!</h3>
+                    <p>You scored <strong>${score} out of ${quiz.length}</strong> (${percentage}%)</p>
+                </div>
+                <div class="buttons">
+                    <button class="btn" onclick="retakeQuiz()">Retake Quiz</button>
+                    <button class="btn-secondary" onclick="backToGames()">Back to Games</button>
+                </div>
+            `;
+            quizContent.innerHTML = html;
+        }
+
+        function retakeQuiz() {
+            startQuiz(currentQuiz);
+        }
+
+        function backToGames() {
+            document.getElementById('quizContent').classList.remove('active');
+            
+            document.getElementById('gameSelection').style.display = 'grid'; 
+            currentQuiz = null;
+        }
+    </script>
+</body>
+</html>

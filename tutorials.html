@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Free Tutorials - Rwanda Connekt</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+  <style>
+    .tutorials-container { max-width: 1100px; margin: 3rem auto; padding: 2rem; }
+    .tutorials-header { text-align: center; margin-bottom: 2rem; }
+    .tutorials-header h1 { color: #fff; font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .tutorials-header p { color: #ccc; }
+    
+    .language-tabs { display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center; }
+    .tab-btn { padding: 0.8rem 1.5rem; border-radius: 8px; border: 2px solid rgba(255, 255, 255, 0.2); background: transparent; color: #ccc; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+    .tab-btn.active { border-color: #FFCD00; background: rgba(255, 205, 0, 0.1); color: #FFCD00; }
+    
+    .tutorials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .tutorial-card { background: rgba(39, 39, 42, 0.9); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); overflow: hidden; transition: all 0.3s; cursor: pointer; }
+    .tutorial-card:hover { border-color: #FFCD00; transform: translateY(-5px); }
+    
+    .tutorial-header { background: linear-gradient(135deg, rgba(0, 155, 58, 0.3), rgba(255, 205, 0, 0.2)); padding: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .tutorial-header h3 { color: #fff; font-size: 1.1rem; margin: 0; }
+    .tutorial-header i { font-size: 1.5rem; color: #FFCD00; }
+    
+    .tutorial-body { padding: 1.5rem; }
+    .tutorial-body p { color: #ccc; margin-bottom: 1rem; line-height: 1.6; }
+    
+    .lesson-list { list-style: none; padding: 0; margin-bottom: 1rem; }
+    .lesson-list li { color: #ddd; padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; }
+    .lesson-list li:before { content: "✓"; color: #22c55e; font-weight: bold; }
+    
+    .duration { color: #999; font-size: 0.9rem; margin-bottom: 1rem; }
+    
+    .tutorial-card button { width: 100%; padding: 0.8rem; background: linear-gradient(135deg, #009B3A, #FFCD00); border: none; color: #000; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+    .tutorial-card button:hover { opacity: 0.9; }
+    
+    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    
+    .modal-content { background: rgba(39, 39, 42, 0.95); padding: 2rem; border-radius: 12px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border: 1px solid rgba(255, 255, 255, 0.1); }
+    .modal-content h2 { color: #fff; margin-bottom: 1rem; }
+    .modal-content p { color: #ccc; margin-bottom: 1rem; line-height: 1.8; }
+    .modal-content ol { color: #ddd; padding-left: 1.5rem; margin-bottom: 1rem; }
+    .modal-content li { margin-bottom: 0.75rem; line-height: 1.6; }
+    .modal-content strong { color: #FFCD00; }
+    
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #ccc; font-size: 1.5rem; cursor: pointer; }
+    .modal-close:hover { color: #fff; }
+    
+    .back-btn { display: inline-block; color: #FFCD00; text-decoration: none; margin-bottom: 1rem; }
+    
+    @media (max-width: 768px) {
+      .tutorials-header h1 { font-size: 1.8rem; }
+      .language-tabs { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <a href="index.html" aria-label="Rwanda Connekt home">
+        <img src="images/logo__2.png" alt="Rwanda Connekt Logo">
+      </a>
+    </div>
+    <a href="index.html" class="btn">Back Home</a>
+  </nav>
+
+  <main class="container tutorials-container">
+    <a href="index.html" class="back-btn"><i class="ri-arrow-left-line"></i> Back to Home</a>
+
+    <div class="tutorials-header">
+      <h1> Free Tutorials</h1>
+      <p>Learn English and French with our comprehensive free tutorials. Start from beginner to advanced levels!</p>
+    </div>
+
+    <div class="language-tabs">
+      <button class="tab-btn active" onclick="switchLanguage('english')"> English</button>
+      <button class="tab-btn" onclick="switchLanguage('french')">🇫🇷 French</button>
+      <button class="tab-btn" onclick="switchLanguage('kinyarwanda')">🇷🇼 Kinyarwanda</button>
+    </div>
+
+    <div class="tutorials-grid" id="english-tutorials">
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-alphabet-latin"></i>
+          <h3>English Alphabet & Pronunciation</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Master the English alphabet and learn proper pronunciation of each letter and common letter combinations.</p>
+          <ul class="lesson-list">
+            <li>Learn the 26 letters</li>
+            <li>Pronunciation guide</li>
+            <li>Letter combinations</li>
+          </ul>
+          <button onclick="openModal('eng1')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-message-2-line"></i>
+          <h3>Basic English Greetings</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Learn common English greetings and how to introduce yourself politely.</p>
+          <ul class="lesson-list">
+            <li>Hello & Goodbye</li>
+            <li>Polite phrases</li>
+            <li>Introductions</li>
+          </ul>
+          <button onclick="openModal('eng2')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-function-line"></i>
+          <h3>English Numbers 1-100</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Learn to count and use numbers in English conversations.</p>
+          <ul class="lesson-list">
+            <li>Counting 1-20</li>
+            <li>Counting 21-100</li>
+            <li>Ordinal numbers</li>
+          </ul>
+          <button onclick="openModal('eng3')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-time-line"></i>
+          <h3>English Present Tense Verbs</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Understand how to use present tense verbs correctly in English.</p>
+          <ul class="lesson-list">
+            <li>Subject pronouns</li>
+            <li>Present simple</li>
+            <li>Be verb conjugation</li>
+          </ul>
+          <button onclick="openModal('eng4')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-book-mark-line"></i>
+          <h3>English Common Vocabulary</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Build your English vocabulary with common words for everyday topics.</p>
+          <ul class="lesson-list">
+            <li>Food & Drinks</li>
+            <li>Family members</li>
+            <li>Colors & Shapes</li>
+          </ul>
+          <button onclick="openModal('eng5')">Start</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorials-grid" id="french-tutorials" style="display:none;">
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-alphabet-latin"></i>
+          <h3>French Alphabet & Pronunciation</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Master the French alphabet and learn proper pronunciation with accents.</p>
+          <ul class="lesson-list">
+            <li>L'alphabet français</li>
+            <li>Accents</li>
+            <li>Pronunciation</li>
+          </ul>
+          <button onclick="openModal('fr1')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-message-2-line"></i>
+          <h3>French Basic Greetings</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Learn essential French greetings and polite expressions.</p>
+          <ul class="lesson-list">
+            <li>Salutations</li>
+            <li>Politesse</li>
+            <li>Se présenter</li>
+          </ul>
+          <button onclick="openModal('fr2')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-function-line"></i>
+          <h3>French Numbers 1-100</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Learn French numbers and how to count up to 100.</p>
+          <ul class="lesson-list">
+            <li>Nombres 1-20</li>
+            <li>Nombres 21-100</li>
+            <li>Nombres ordinaux</li>
+          </ul>
+          <button onclick="openModal('fr3')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-time-line"></i>
+          <h3>French Present Tense Verbs</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Master French present tense verbs and conjugation.</p>
+          <ul class="lesson-list">
+            <li>Être et Avoir</li>
+            <li>Verbes réguliers</li>
+            <li>Conjugaison</li>
+          </ul>
+          <button onclick="openModal('fr4')">Start</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-book-mark-line"></i>
+          <h3>French Common Vocabulary</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Build your French vocabulary with common everyday words.</p>
+          <ul class="lesson-list">
+            <li>Nourriture</li>
+            <li>La famille</li>
+            <li>Couleurs</li>
+          </ul>
+          <button onclick="openModal('fr5')">Start</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tutorials-grid" id="kinyarwanda-tutorials" style="display:none;">
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-book-open-line"></i>
+          <h3>Kinyarwanda Free Tutorials</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Learn the basics of Kinyarwanda for free! These lessons cover greetings, common phrases, numbers, and more.</p>
+          <ul class="lesson-list">
+            <li>Greetings and Introductions</li>
+            <li>Numbers and Counting</li>
+            <li>Common Phrases</li>
+            <li>Days of the Week</li>
+            <li>Simple Conversations</li>
+          </ul>
+          <button onclick="openModal('kin1')">Start Learning</button>
+        </div>
+      </div>
+      <div class="tutorial-card">
+        <div class="tutorial-header">
+          <i class="ri-graduation-cap-line"></i>
+          <h3>Kinyarwanda Full Course</h3>
+        </div>
+        <div class="tutorial-body">
+          <p>Take a complete Kinyarwanda course: grammar, vocabulary, pronunciation, and cultural insights. Perfect for beginners and advanced learners.</p>
+          <ul class="lesson-list">
+            <li>Grammar Essentials</li>
+            <li>Vocabulary Building</li>
+            <li>Pronunciation Practice</li>
+            <li>Culture & Traditions</li>
+            <li>Advanced Conversations</li>
+          </ul>
+          <button onclick="openModal('kin2')">Start Full Course</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <div id="tutorialModal" class="modal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // Redirect to login.html if not logged in
+    if (!localStorage.getItem('rc_user')) {
+      window.location.href = 'login.html';
+    }
+
+    const tutorials = {
+      english: [
+        {
+          id: "eng1",
+          title: "English Alphabet & Pronunciation",
+          icon: "ri-alphabet-latin",
+          duration: "30 mins",
+          lessons: ["Learn the 26 letters", "Pronunciation guide", "Letter combinations"],
+          description: "Master the English alphabet and learn proper pronunciation of each letter and common letter combinations.",
+          content: `
+            <h2>English Alphabet & Pronunciation</h2>
+            <p>Learn the 26 letters of the English alphabet and how to pronounce them correctly.</p>
+            <h3>Lessons:</h3>
+            <ol>
+              <li><strong>Letter Recognition:</strong> A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z</li>
+              <li><strong>Vowels:</strong> A (ay), E (ee), I (eye), O (oh), U (you)</li>
+              <li><strong>Consonants:</strong> B (bee), C (see), D (dee), F (eff), etc.</li>
+              <li><strong>Letter Combinations:</strong> TH, CH, SH, PH, etc.</li>
+              <li><strong>Practice:</strong> Repeat after audio and speak aloud</li>
+            </ol>
+          `
+        },
+        {
+          id: "eng2",
+          title: "Basic English Greetings",
+          icon: "ri-message-2-line",
+          duration: "20 mins",
+          lessons: ["Hello & Goodbye", "Polite phrases", "Introductions"],
+          description: "Learn common English greetings and how to introduce yourself politely.",
+          content: `
+            <h2>Basic English Greetings</h2>
+            <p>Master essential greetings for everyday English conversations.</p>
+            <h3>Key Phrases:</h3>
+            <ol>
+              <li><strong>Hello / Hi:</strong> "Hello! How are you?"</li>
+              <li><strong>Good morning:</strong> "Good morning! I hope you had a great night."</li>
+              <li><strong>How are you?:</strong> "How are you doing today?"</li>
+              <li><strong>Nice to meet you:</strong> "My name is [Your Name]. Nice to meet you!"</li>
+              <li><strong>Goodbye:</strong> "Goodbye! See you later!" or "Bye! Have a nice day!"</li>
+              <li><strong>Thank you:</strong> "Thank you for your help!"</li>
+            </ol>
+          `
+        },
+        {
+          id: "eng3",
+          title: "English Numbers 1-100",
+          icon: "ri-function-line",
+          duration: "25 mins",
+          lessons: ["Counting 1-20", "Counting 21-100", "Ordinal numbers"],
+          description: "Learn to count and use numbers in English conversations.",
+          content: `
+            <h2>English Numbers 1-100</h2>
+            <p>Learn how to count and use numbers in everyday English.</p>
+            <h3>Lessons:</h3>
+            <ol>
+              <li><strong>Numbers 1-10:</strong> One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten</li>
+              <li><strong>Numbers 11-20:</strong> Eleven, Twelve, Thirteen... Twenty</li>
+              <li><strong>Tens:</strong> Twenty, Thirty, Forty, Fifty, Sixty, Seventy, Eighty, Ninety</li>
+              <li><strong>Compound numbers:</strong> Twenty-one, Thirty-five, Ninety-nine</li>
+              <li><strong>Ordinal Numbers:</strong> 1st (First), 2nd (Second), 3rd (Third), 4th (Fourth), etc.</li>
+            </ol>
+          `
+        },
+        {
+          id: "eng4",
+          title: "English Present Tense Verbs",
+          icon: "ri-time-line",
+          duration: "45 mins",
+          lessons: ["Subject pronouns", "Present simple", "Be verb conjugation"],
+          description: "Understand how to use present tense verbs correctly in English.",
+          content: `
+            <h2>English Present Tense Verbs</h2>
+            <p>Learn to form and use present tense in English sentences.</p>
+            <h3>Key Concepts:</h3>
+            <ol>
+              <li><strong>Subject Pronouns:</strong> I, You, He, She, It, We, They</li>
+              <li><strong>Present Simple (Habitual):</strong> "I play tennis." "She works in an office."</li>
+              <li><strong>Be Verb:</strong> I am, You are, He/She/It is, We/They are</li>
+              <li><strong>Third person -s:</strong> He plays, She writes, It costs</li>
+              <li><strong>Common verbs:</strong> go, make, get, know, take, come, see, think, say, do</li>
+            </ol>
+          `
+        },
+        {
+          id: "eng5",
+          title: "English Common Vocabulary",
+          icon: "ri-book-mark-line",
+          duration: "60 mins",
+          lessons: ["Food & Drinks", "Family members", "Colors & Shapes"],
+          description: "Build your English vocabulary with common words for everyday topics.",
+          content: `
+            <h2>English Common Vocabulary</h2>
+            <p>Learn essential English vocabulary for common topics.</p>
+            <h3>Topics:</h3>
+            <ol>
+              <li><strong>Family:</strong> Mother, Father, Sister, Brother, Grandmother, Grandfather</li>
+              <li><strong>Food:</strong> Apple, Bread, Chicken, Rice, Vegetables, Water, Coffee</li>
+              <li><strong>Colors:</strong> Red, Blue, Green, Yellow, Black, White, Orange, Purple</li>
+              <li><strong>Shapes:</strong> Circle, Square, Triangle, Rectangle, Pentagon</li>
+              <li><strong>Days & Months:</strong> Monday, Tuesday... January, February...</li>
+            </ol>
+          `
+        }
+      ],
+      french: [
+        {
+          id: "fr1",
+          title: "French Alphabet & Pronunciation",
+          icon: "ri-alphabet-latin",
+          duration: "35 mins",
+          lessons: ["L'alphabet français", "Accents", "Pronunciation"],
+          description: "Master the French alphabet and learn proper pronunciation with accents.",
+          content: `
+            <h2>L'Alphabet Français (French Alphabet)</h2>
+            <p>Learn the 26 letters of the French alphabet and their correct pronunciation.</p>
+            <h3>Lessons:</h3>
+            <ol>
+              <li><strong>The alphabet:</strong> A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z</li>
+              <li><strong>French accents:</strong> é (acute), è, ê, ë (grave/circumflex), ç, à, ù, û</li>
+              <li><strong>Vowels:</strong> a, e, i, o, u, y</li>
+              <li><strong>Nasal sounds:</strong> on, an, in, un</li>
+              <li><strong>Practice with French words</strong></li>
+            </ol>
+          `
+        },
+        {
+          id: "fr2",
+          title: "French Basic Greetings",
+          icon: "ri-message-2-line",
+          duration: "25 mins",
+          lessons: ["Salutations", "Politesse", "Se présenter"],
+          description: "Learn essential French greetings and polite expressions.",
+          content: `
+            <h2>Salutations Françaises (French Greetings)</h2>
+            <p>Essential greetings to start your French conversations.</p>
+            <h3>Key Phrases:</h3>
+            <ol>
+              <li><strong>Bonjour:</strong> Good morning / Good afternoon (until evening)</li>
+              <li><strong>Bonsoir:</strong> Good evening (after 6 PM)</li>
+              <li><strong>Bonne nuit:</strong> Good night (going to bed)</li>
+              <li><strong>Comment ça va?:</strong> How are you? (formal)</li>
+              <li><strong>Ça va?:</strong> How are you? (informal)</li>
+              <li><strong>Au revoir:</strong> Goodbye</li>
+              <li><strong>À bientôt:</strong> See you soon</li>
+              <li><strong>S'il vous plaît:</strong> Please (formal) / S'il te plaît (informal)</li>
+              <li><strong>Merci:</strong> Thank you</li>
+              <li><strong>De rien:</strong> You're welcome</li>
+            </ol>
+          `
+        },
+        {
+          id: "fr3",
+          title: "French Numbers 1-100",
+          icon: "ri-function-line",
+          duration: "30 mins",
+          lessons: ["Nombres 1-20", "Nombres 21-100", "Nombres ordinaux"],
+          description: "Learn French numbers and how to count up to 100.",
+          content: `
+            <h2>Les Nombres Français (French Numbers)</h2>
+            <p>Learn to count and use numbers in French.</p>
+            <h3>Lessons:</h3>
+            <ol>
+              <li><strong>1-10:</strong> un, deux, trois, quatre, cinq, six, sept, huit, neuf, dix</li>
+              <li><strong>11-20:</strong> onze, douze, treize, quatorze, quinze, seize, dix-sept, dix-huit, dix-neuf, vingt</li>
+              <li><strong>Tens:</strong> vingt, trente, quarante, cinquante, soixante, soixante-dix, quatre-vingts, quatre-vingt-dix</li>
+              <li><strong>100 & 1000:</strong> cent, mille</li>
+              <li><strong>Ordinal numbers:</strong> premier (1st), deuxième (2nd), troisième (3rd), etc.</li>
+            </ol>
+          `
+        },
+        {
+          id: "fr4",
+          title: "French Present Tense Verbs",
+          icon: "ri-time-line",
+          duration: "50 mins",
+          lessons: ["Être et Avoir", "Verbes réguliers", "Conjugaison"],
+          description: "Master French present tense verbs and conjugation.",
+          content: `
+            <h2>Verbes au Présent (Present Tense Verbs)</h2>
+            <p>Learn to form and use present tense in French sentences.</p>
+            <h3>Key Concepts:</h3>
+            <ol>
+              <li><strong>Être (To be):</strong> Je suis, Tu es, Il/Elle est, Nous sommes, Vous êtes, Ils/Elles sont</li>
+              <li><strong>Avoir (To have):</strong> J'ai, Tu as, Il/Elle a, Nous avons, Vous avez, Ils/Elles ont</li>
+              <li><strong>Regular -ER verbs:</strong> Je parle, Tu parles, Il parle (e.g., parler = to speak)</li>
+              <li><strong>Common verbs:</strong> aller, faire, pouvoir, vouloir, devoir, venir, prendre</li>
+            </ol>
+          `
+        },
+        {
+          id: "fr5",
+          title: "French Common Vocabulary",
+          icon: "ri-book-mark-line",
+          duration: "65 mins",
+          lessons: ["Nourriture", "La famille", "Couleurs"],
+          description: "Build your French vocabulary with common everyday words.",
+          content: `
+            <h2>Vocabulaire Français Commun (Common French Vocabulary)</h2>
+            <p>Learn essential French words for daily topics.</p>
+            <h3>Topics:</h3>
+            <ol>
+              <li><strong>La Famille (Family):</strong> Mère, Père, Sœur, Frère, Grand-mère, Grand-père</li>
+              <li><strong>Nourriture (Food):</strong> Pain, Fromage, Vin, Pomme, Poisson, Viande, Légumes</li>
+              <li><strong>Couleurs (Colors):</strong> Rouge (Red), Bleu (Blue), Vert (Green), Jaune (Yellow), Noir (Black)</li>
+              <li><strong>Jours & Mois:</strong> Lundi, Mardi, Mercredi... Janvier, Février...</li>
+              <li><strong>Animaux (Animals):</strong> Chat (Cat), Chien (Dog), Oiseau (Bird), Poisson (Fish)</li>
+            </ol>
+          `
+        }
+      ],
+      kinyarwanda: [
+        {
+          id: "kin1",
+          title: "Kinyarwanda Free Tutorials",
+          icon: "ri-book-open-line",
+          duration: "10 min",
+          lessons: ["Greetings and Introductions", "Numbers and Counting", "Common Phrases", "Days of the Week", "Simple Conversations"],
+          description: "Learn the basics of Kinyarwanda for free! These lessons cover greetings, common phrases, numbers, and more.",
+          content: `
+            <h2>Kinyarwanda Free Tutorials</h2>
+            <p>Learn the basics of Kinyarwanda for free! These lessons cover greetings, common phrases, numbers, and more.</p>
+            <h3>Lessons:</h3>
+            <ol>
+              <li><strong>Greetings and Introductions:</strong><br>
+                - Muraho: Hello<br>
+                - Amakuru yawe?: How are you?<br>
+                - Nitwa [izina]: My name is [name]<br>
+                - Ndakomeye: I am fine<br>
+              </li>
+              <li><strong>Numbers and Counting:</strong><br>
+                - 1: Rimwe<br>
+                - 2: Kabiri<br>
+                - 3: Gatatu<br>
+                - 4: Kane<br>
+                - 5: Gatanu<br>
+                - 6: Gatandatu<br>
+                - 7: Karindwi<br>
+                - 8: Umunani<br>
+                - 9: Icyenda<br>
+                - 10: Icumi<br>
+              </li>
+              <li><strong>Common Phrases:</strong><br>
+                - Yego: Yes<br>
+                - Oya: No<br>
+                - Murakoze: Thank you<br>
+                - Mbabarira: Excuse me / Sorry<br>
+                - Ndashaka amazi: I want water<br>
+              </li>
+              <li><strong>Days of the Week:</strong><br>
+                - Kuwa Mbere: Monday<br>
+                - Kuwa Kabiri: Tuesday<br>
+                - Kuwa Gatatu: Wednesday<br>
+                - Kuwa Kane: Thursday<br>
+                - Kuwa Gatanu: Friday<br>
+                - Kuwa Gatandatu: Saturday<br>
+                - Ku Cyumweru: Sunday<br>
+              </li>
+              <li><strong>Simple Conversations:</strong><br>
+                - Q: Amakuru yawe? (How are you?)<br>
+                  A: Ni meza. (I am fine.)<br>
+                - Q: Witwa nde? (What is your name?)<br>
+                  A: Nitwa [izina]. (My name is [name].)<br>
+                - Q: Utuye he? (Where do you live?)<br>
+                  A: Ntura i Kigali. (I live in Kigali.)<br>
+              </li>
+            </ol>
+          `
+        },
+        {
+          id: "kin2",
+          title: "Kinyarwanda Full Course",
+          icon: "ri-graduation-cap-line",
+          duration: "60 min",
+          lessons: ["Grammar Essentials", "Vocabulary Building", "Pronunciation Practice", "Culture & Traditions", "Advanced Conversations"],
+          description: "Take a complete Kinyarwanda course: grammar, vocabulary, pronunciation, and cultural insights. Perfect for beginners and advanced learners.",
+          content: `
+            <h2>Kinyarwanda Full Course</h2>
+            <p>Take a complete Kinyarwanda course: grammar, vocabulary, pronunciation, and cultural insights. Perfect for beginners and advanced learners.</p>
+            <h3>Course Outline & Content:</h3>
+            <ol>
+              <li><strong>Grammar Essentials:</strong><br>
+                - Nouns: Inzu (house), Umuntu (person), Igiti (tree)<br>
+                - Verbs: Kunywa (to drink), Kugenda (to go), Kubona (to see)<br>
+                - Sentence structure: Subject-Verb-Object<br>
+                - Tenses: Present (Ndanywa - I drink), Past (Nanyoye - I drank), Future (Nzanywa - I will drink)<br>
+              </li>
+              <li><strong>Vocabulary Building:</strong><br>
+                - Family: Papa (father), Mama (mother), Umwana (child)<br>
+                - Food: Amazi (water), Umugati (bread), Inyama (meat)<br>
+                - Places: Isoko (market), Ishuri (school), Ibitaro (hospital)<br>
+                - Idioms: "Gufata icyemezo" (to make a decision)<br>
+              </li>
+              <li><strong>Pronunciation Practice:</strong><br>
+                - Sounds: "ny" as in Kinyarwanda, "sh" as in amashuri<br>
+                - Stress: Emphasis on the first syllable<br>
+                - Intonation: Rising for questions, falling for statements<br>
+              </li>
+              <li><strong>Culture & Traditions:</strong><br>
+                - Greetings: Gusuhuzanya (greeting each other)<br>
+                - Etiquette: Gukubita agatoki ku kandi (handshake)<br>
+                - Customs: Kwita Izina (naming ceremony)<br>
+              </li>
+              <li><strong>Advanced Conversations:</strong><br>
+                - Dialogues: <br>
+                  Q: Wigeze ujya i Musanze? (Have you ever been to Musanze?)<br>
+                  A: Yego, narahageze. (Yes, I have been there.)<br>
+                - Role-play: Buying at the market, asking for directions<br>
+                - Real-life scenarios: Visiting a doctor, attending a ceremony<br>
+              </li>
+            </ol>
+          `
+        }
+      ]
+    };
+
+    let currentLanguage = 'english';
+
+    function switchLanguage(lang) {
+      document.getElementById('english-tutorials').style.display = lang === 'english' ? 'grid' : 'none';
+      document.getElementById('french-tutorials').style.display = lang === 'french' ? 'grid' : 'none';
+      document.getElementById('kinyarwanda-tutorials').style.display = lang === 'kinyarwanda' ? 'grid' : 'none';
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('.tab-btn[onclick*="' + lang + '"]').classList.add('active');
+    }
+
+    function openModal(tutorialId) {
+      // Detect language from tutorialId prefix
+      let lang = currentLanguage;
+      if (tutorialId.startsWith('fr')) lang = 'french';
+      else if (tutorialId.startsWith('kin')) lang = 'kinyarwanda';
+      const tutorial = tutorials[lang].find(t => t.id === tutorialId);
+      if (tutorial) {
+        document.getElementById('modalBody').innerHTML = tutorial.content;
+        document.getElementById('tutorialModal').classList.add('active');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('tutorialModal').classList.remove('active');
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('tutorialModal').addEventListener('click', (e) => {
+      if (e.target.id === 'tutorialModal') closeModal();
+    });
+
+    function openKinyarwandaTutorial() {
+      openModal('kinyarwanda1');
+    }
+
+    function openKinyarwandaCourse() {
+      openModal('kinyarwanda2');
+    }
+
+    // Initialize
+    switchLanguage('english');
+  </script>
+
+  <!-- Add modals for French and Kinyarwanda tutorials -->
+
+  <div class="copyright">
+    Copyright © 2025 SHEMA Ian. All Rights Reserved.
+  </div>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Translate - Rwanda Connekt</title>
+    <style>
+        .translate-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+
+        .translate-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .translate-header h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .translate-header p {
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .translator-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .language-column {
+            background-color: rgba(39, 39, 42, 0.8);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .language-column h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .language-column textarea {
+            width: 100%;
+            height: 300px;
+            padding: 1rem;
+            background-color: #18181B;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .language-column textarea:focus {
+            outline: none;
+            border-color: #FFCD00;
+        }
+
+        .language-column textarea::placeholder {
+            color: #666;
+        }
+
+        .swap-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: none;
+            border: none;
+            color: #FFCD00;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .swap-button:hover {
+            transform: rotate(180deg);
+        }
+
+        .middle-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .translate-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #009B3A, #FFCD00);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .translate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0, 155, 58, 0.3);
+        }
+
+        .clear-btn {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #2b2b2b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .clear-btn:hover {
+            background-color: #3a3a3a;
+        }
+
+        .char-count {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: #FFCD00;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .translator-box {
+                grid-template-columns: 1fr;
+            }
+
+            .middle-col {
+                order: -1;
+                margin-bottom: 1rem;
+            }
+
+            .translate-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .language-column textarea {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+           <ul class="nav-links">
+            <li class="link"><a href="index.html">Home</a></li>
+            <li id="link1" class="link"><a href="index.html#features">Features</a></li>
+            <li id="link2" class="link"><a href="index.html">Pricing</a></li>
+            <li id="link3" class="link"><a href="index.html">About</a></li>
+        </ul>
+        <a href="index.html" class="btn">Back Home</a>
+    </nav>
+
+    <div class="translate-container">
+        <a href="index.html" class="back-link"><i class="ri-arrow-left-line"></i> Back to Home</a>
+
+        <div class="translate-header">
+            <h1>Language Translator</h1>
+            <p>Translate from Kinyarwanda to English or French instantly</p>
+        </div>
+
+        <div class="translator-box">
+            
+            <div class="language-column">
+                <h3>
+                    <i class="ri-flag-2-line" style="color: #009B3A;"></i>
+                    Kinyarwanda
+                </h3>
+                <textarea id="kinyarwanda" placeholder="Enter text in Kinyarwanda..." spellcheck="false"></textarea>
+                <div class="char-count"><span id="kin-count">0</span> characters</div>
+            </div>
+
+           
+            <div class="language-column middle-col">
+                <button class="swap-button" id="swapBtn" title="Swap languages">
+                    <i class="ri-repeat-2-line"></i>
+                </button>
+            </div>
+
+           
+            <div class="language-column">
+                <h3>
+                    <i class="ri-flag-2-line" style="color: #CE1126;"></i>
+                    English
+                </h3>
+                <textarea id="english" placeholder="English translation..." readonly spellcheck="false"></textarea>
+                <div class="char-count"><span id="eng-count">0</span> characters</div>
+            </div>
+
+           
+            <div class="language-column" style="grid-column: 1 / -1;">
+                <h3>
+                    <i class="ri-flag-2-line" style="color: #FFCD00;"></i>
+                    French
+                </h3>
+                <textarea id="french" placeholder="French translation..." readonly spellcheck="false"></textarea>
+                <div class="char-count"><span id="fr-count">0</span> characters</div>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="translate-btn" id="translateBtn">
+                <i class="ri-translate-2"></i> Translate
+            </button>
+            <button class="clear-btn" id="clearBtn">
+                <i class="ri-refresh-line"></i> Clear
+            </button>
+        </div>
+    </div>
+
+    <script>
+  // Redirect to login.html if not logged in
+  if (!localStorage.getItem('rc_user')) {
+    window.location.href = 'login.html';
+  }
+</script>
+    <script>
+     
+        const translations = {
+  "muraho": { "en": "Hi", "fr": "Salut" },
+  "hello": { "en": "Hello", "fr": "Bonjour" },
+  "mwaramutse": { "en": "Good morning", "fr": "Bonjour" },
+  "mwiriwe": { "en": "Good afternoon", "fr": "Bon après-midi" },
+  "iriwe": { "en": "Good day", "fr": "Bonne journée" },
+  "amakuru": { "en": "How are you?", "fr": "Comment ça va ?" },
+  "ni meza urakoze": { "en": "I’m fine, thank you", "fr": "Je vais bien, merci" },
+  "nawe se": { "en": "And you?", "fr": "Et toi ?" },
+  "ndishimye": { "en": "I’m happy", "fr": "Je suis content" },
+  "ndaruhutse": { "en": "I’m relaxed / resting", "fr": "Je suis détendu / Je me repose" },
+  "urakoze": { "en": "Thank you", "fr": "Merci" },
+  "urakoze cyane": { "en": "Thank you very much", "fr": "Merci beaucoup" },
+  "murakoze": { "en": "Thank you (plural)", "fr": "Merci à vous" },
+  "nta kibazo": { "en": "No problem", "fr": "Pas de problème" },
+  "mbabarira": { "en": "I’m sorry / Forgive me", "fr": "Je suis désolé / Pardonne-moi" },
+  "ndagukunda": { "en": "I love you", "fr": "Je t’aime" },
+  "ndagukumbuye": { "en": "I miss you", "fr": "Tu me manques" },
+  "urabeho": { "en": "Goodbye", "fr": "Au revoir" },
+  "tuzabonana ejo": { "en": "See you tomorrow", "fr": "À demain" },
+  "murakaza neza": { "en": "Welcome", "fr": "Bienvenue" },
+  "komera": { "en": "Stay strong / Take care", "fr": "Sois fort / Prends soin de toi" },
+
+  "nshonje": { "en": "I’m hungry", "fr": "J’ai faim" },
+  "nanyotewe": { "en": "I’m thirsty", "fr": "J’ai soif" },
+  "nshaka amazi": { "en": "I want water", "fr": "Je veux de l’eau" },
+  "nshaka ibiryo": { "en": "I want food", "fr": "Je veux de la nourriture" },
+  "ni ryari dusangira": { "en": "When do we eat?", "fr": "Quand mange-t-on ?" },
+  "icyo gufungura": { "en": "Something to eat", "fr": "Quelque chose à manger" },
+  "icyo kunywa": { "en": "Something to drink", "fr": "Quelque chose à boire" },
+  "ahantu heza": { "en": "A nice place", "fr": "Un bel endroit" },
+  "mfite_uburwayi": { "en": "I’m sick", "fr": "Je suis malade" },
+  "mfite ububabare": { "en": "I’m in pain", "fr": "J’ai mal" },
+  "mfite akazi": { "en": "I have work", "fr": "J’ai du travail" },
+
+  "urajya he": { "en": "Where are you going?", "fr": "Où vas-tu ?" },
+  "uri he": { "en": "Where are you?", "fr": "Où es-tu ?" },
+  "ukuhe": { "en": "Where?", "fr": "Où ?" },
+  "tugende": { "en": "Let’s go", "fr": "Allons-y" },
+  "subira inyuma": { "en": "Go back", "fr": "Retourne" },
+  "guma aha": { "en": "Stay here", "fr": "Reste ici" },
+  "jya imbere": { "en": "Go ahead", "fr": "Avance" },
+  "kata ibumoso": { "en": "Turn left", "fr": "Tourne à gauche" },
+  "kata_iburyo": { "en": "Turn right", "fr": "Tourne à droite" },
+  "ngeze mu mujyi": { "en": "I’m in town", "fr": "Je suis en ville" },
+  "ndi mu rugo": { "en": "I’m at home", "fr": "Je suis à la maison" },
+  "ndi mu mujyi": { "en": "I’m in the city", "fr": "Je suis en ville" },
+  "ngeze aho ngiye": { "en": "I’ve arrived", "fr": "Je suis arrivé" },
+
+  "urashaka iki": { "en": "What do you want?", "fr": "Que veux-tu ?" },
+  "witwa nde": { "en": "What’s your name?", "fr": "Comment tu t’appelles ?" },
+  "nitwa": { "en": "My name is", "fr": "Je m’appelle" },
+  "ukora iki": { "en": "What do you do?", "fr": "Que fais-tu ?" },
+  "ni ryari": { "en": "When?", "fr": "Quand ?" },
+  "angahe": { "en": "How much?", "fr": "Combien ?" },
+  "kuki": { "en": "Why?", "fr": "Pourquoi ?" },
+  "ute": { "en": "How?", "fr": "Comment ?" },
+  "ni iki": { "en": "What is it?", "fr": "Qu’est-ce que c’est ?" },
+  "byiza cyane": { "en": "Very good", "fr": "Très bien" },
+  "si byiza": { "en": "Not good", "fr": "Pas bien" },
+  "mfasha": { "en": "Help me", "fr": "Aide-moi" },
+  "mfite ikibazo": { "en": "I have a problem", "fr": "J’ai un problème" },
+  "tega amatwi": { "en": "Listen", "fr": "Écoute" },
+  "subira": { "en": "Repeat / Go back", "fr": "Répète / Retourne" },
+
+  "uyu munsi": { "en": "Today", "fr": "Aujourd’hui" },
+  "ejo": { "en": "Tomorrow", "fr": "Demain" },
+  "ejo hashize": { "en": "Yesterday", "fr": "Hier" },
+  "mu gitondo": { "en": "In the morning", "fr": "Le matin" },
+  "nimugoroba": { "en": "In the evening", "fr": "Le soir" },
+  "ijoro": { "en": "Night", "fr": "Nuit" },
+  "rimwe": { "en": "One", "fr": "Un" },
+  "kabiri": { "en": "Two", "fr": "Deux" },
+  "gatatu": { "en": "Three", "fr": "Trois" },
+  "kane": { "en": "Four", "fr": "Quatre" },
+  "gatanu": { "en": "Five", "fr": "Cinq" },
+  "nyinshi": { "en": "Many / A lot", "fr": "Beaucoup" },
+  "bike": { "en": "Few / Little", "fr": "Peu" },
+
+  "rwanda": { "en": "Rwanda", "fr": "Rwanda" },
+  "kigali": { "en": "Kigali", "fr": "Kigali" },
+  "africa": { "en": "Africa", "fr": "Afrique" }
+};
+
+        const kinyarwandaInput = document.getElementById('kinyarwanda');
+        const englishOutput = document.getElementById('english');
+        const frenchOutput = document.getElementById('french');
+        const translateBtn = document.getElementById('translateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const swapBtn = document.getElementById('swapBtn');
+
+        // Translate function
+        function translate() {
+            const text = kinyarwandaInput.value.toLowerCase().trim();
+
+            if (!text) {
+                englishOutput.value = '';
+                frenchOutput.value = '';
+                return;
+            }
+
+            // Simple word-by-word translation
+            const words = text.split(/\s+/);
+            let englishTranslation = [];
+            let frenchTranslation = [];
+
+            words.forEach(word => {
+                const cleanWord = word.replace(/[.,!?;:]/g, '');
+                if (translations[cleanWord]) {
+                    englishTranslation.push(translations[cleanWord].en);
+                    frenchTranslation.push(translations[cleanWord].fr);
+                } else {
+                    // If word not found, keep original (for names, etc.)
+                    englishTranslation.push(word);
+                    frenchTranslation.push(word);
+                }
+            });
+
+            englishOutput.value = englishTranslation.join(' ');
+            frenchOutput.value = frenchTranslation.join(' ');
+
+            updateCharCount();
+        }
+
+       
+        function updateCharCount() {
+            document.getElementById('kin-count').textContent = kinyarwandaInput.value.length;
+            document.getElementById('eng-count').textContent = englishOutput.value.length;
+            document.getElementById('fr-count').textContent = frenchOutput.value.length;
+        }
+
+    
+        function clearAll() {
+            kinyarwandaInput.value = '';
+            englishOutput.value = '';
+            frenchOutput.value = '';
+            updateCharCount();
+            kinyarwandaInput.focus();
+        }
+
+       
+        function swap() {
+            const temp = kinyarwandaInput.value;
+            kinyarwandaInput.value = englishOutput.value;
+            englishOutput.value = temp;
+            updateCharCount();
+        }
+
+    
+        translateBtn.addEventListener('click', translate);
+        clearBtn.addEventListener('click', clearAll);
+        swapBtn.addEventListener('click', swap);
+        kinyarwandaInput.addEventListener('keyup', updateCharCount);
+        kinyarwandaInput.addEventListener('input', updateCharCount);
+
+      
+        kinyarwandaInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                translate();
+            }
+        });
+
+       
+        kinyarwandaInput.focus();
+    </script>
+
+    <div class="copyright">
+        Copyright © 2025 SHEMA Ian. All Rights Reserved.
+    </div>
+</body>
+
+</html>
